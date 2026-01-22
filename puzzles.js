@@ -422,445 +422,445 @@ window.PUZZLE_DATA = [
       "orange": 1
     },
     "start": {
-      "col": 0,
-      "row": 3,
-      "dir": "NE"
+      "col": 3,
+      "row": 0,
+      "dir": "SW"
     },
     "end": {
-      "col": 3,
-      "row": 1
+      "col": 1,
+      "row": 3
     }
   },
   {
     "id": 25,
     "type": "square",
-    "start": {
-      "col": 1,
-      "row": 2,
-      "dir": "NE"
-    },
-    "end": {
-      "col": 2,
-      "row": 2
-    },
     "pieces": {
       "green": 1,
       "yellow": 1,
-      "orange": 0
+      "orange": 1
+    },
+    "end": {
+      "col": 1,
+      "row": 3
+    },
+    "start": {
+      "col": 3,
+      "row": 0,
+      "dir": "SW"
     }
   },
   {
     "id": 26,
     "type": "square",
+    "pieces": {
+      "green": 2,
+      "yellow": 1,
+      "orange": 0
+    },
     "start": {
-      "col": 2,
-      "row": 2,
-      "dir": "NW"
+      "col": 0,
+      "row": 0,
+      "dir": "E"
     },
     "end": {
       "col": 1,
-      "row": 2
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 0
+      "row": 3
     }
   },
   {
     "id": 27,
     "type": "square",
-    "start": {
-      "col": 0,
-      "row": 3,
-      "dir": "NE"
-    },
-    "end": {
-      "col": 3,
-      "row": 0
-    },
     "pieces": {
       "green": 1,
-      "yellow": 2,
-      "orange": 0
+      "yellow": 1,
+      "orange": 1
+    },
+    "end": {
+      "col": 0,
+      "row": 0
+    },
+    "start": {
+      "col": 1,
+      "row": 0,
+      "dir": "E"
     }
   },
   {
     "id": 28,
     "type": "square",
+    "pieces": {
+      "green": 0,
+      "yellow": 1,
+      "orange": 2
+    },
     "start": {
-      "col": 3,
-      "row": 3,
-      "dir": "NW"
+      "col": 0,
+      "row": 0,
+      "dir": "S"
     },
     "end": {
-      "col": 0,
-      "row": 0
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
+      "col": 3,
+      "row": 1
     }
   },
   {
     "id": 29,
     "type": "square",
+    "pieces": {
+      "green": 1,
+      "yellow": 1,
+      "orange": 1
+    },
     "start": {
-      "col": 0,
-      "row": 3,
-      "dir": "NE"
+      "col": 3,
+      "row": 0,
+      "dir": "W"
     },
     "end": {
       "col": 3,
-      "row": 0
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
+      "row": 3
     }
   },
   {
     "id": 30,
     "type": "square",
-    "start": {
-      "col": 3,
-      "row": 3,
-      "dir": "NW"
+    "pieces": {
+      "green": 4,
+      "yellow": 6,
+      "orange": 0
     },
     "end": {
       "col": 0,
-      "row": 0
+      "row": 2
     },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
+    "start": {
+      "col": 0,
+      "row": 1,
+      "dir": "E"
     }
   },
   {
     "id": 31,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 1,
+      "yellow": 0,
+      "orange": 2
+    },
     "start": {
       "col": 0,
-      "row": 3,
+      "row": 2,
       "dir": "NE"
     },
     "end": {
-      "col": 3,
-      "row": 0
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
+      "col": 4,
+      "row": 2
     }
   },
   {
     "id": 32,
-    "type": "square",
-    "start": {
-      "col": 3,
-      "row": 3,
-      "dir": "NW"
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 1,
+      "orange": 0
     },
     "end": {
-      "col": 0,
-      "row": 0
+      "col": 2,
+      "row": 2
     },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
+    "start": {
+      "col": 0,
+      "row": 0,
+      "dir": "S"
     }
   },
   {
     "id": 33,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 1,
+      "orange": 0
+    },
     "start": {
       "col": 0,
-      "row": 2,
-      "dir": "NE"
+      "row": 3,
+      "dir": "N"
     },
     "end": {
       "col": 3,
-      "row": 1
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
+      "row": 2
     }
   },
   {
     "id": 34,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 0,
+      "orange": 1
+    },
     "start": {
       "col": 0,
-      "row": 1,
+      "row": 0,
       "dir": "SE"
     },
     "end": {
-      "col": 3,
+      "col": 4,
       "row": 2
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 2,
-      "orange": 0
     }
   },
   {
     "id": 35,
-    "type": "square",
-    "start": {
-      "col": 1,
-      "row": 0,
-      "dir": "SE"
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 0,
+      "orange": 2
     },
     "end": {
-      "col": 2,
-      "row": 3
+      "col": 5,
+      "row": 2
     },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 1
+    "start": {
+      "col": 0,
+      "row": 2,
+      "dir": "NE"
     }
   },
   {
     "id": 36,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 1,
+      "yellow": 0,
+      "orange": 3
+    },
     "start": {
-      "col": 2,
-      "row": 3,
+      "col": 3,
+      "row": 1,
       "dir": "NW"
     },
     "end": {
-      "col": 1,
-      "row": 0
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 1
+      "col": 0,
+      "row": 3
     }
   },
   {
     "id": 37,
-    "type": "square",
-    "start": {
-      "col": 1,
-      "row": 0,
-      "dir": "SW"
+    "type": "rect",
+    "pieces": {
+      "green": 3,
+      "yellow": 2,
+      "orange": 0
     },
     "end": {
-      "col": 2,
-      "row": 3
+      "col": 5,
+      "row": 1
     },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 1
+    "start": {
+      "col": 1,
+      "row": 1,
+      "dir": "S"
     }
   },
   {
     "id": 38,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 2,
+      "orange": 0
+    },
     "start": {
-      "col": 2,
-      "row": 3,
-      "dir": "NE"
+      "col": 1,
+      "row": 0,
+      "dir": "E"
     },
     "end": {
       "col": 1,
-      "row": 0
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 1
+      "row": 3
     }
   },
   {
     "id": 39,
-    "type": "square",
-    "start": {
-      "col": 3,
-      "row": 2,
-      "dir": "NW"
-    },
-    "end": {
-      "col": 0,
-      "row": 1
-    },
+    "type": "rect",
     "pieces": {
-      "green": 1,
+      "green": 2,
       "yellow": 1,
       "orange": 1
+    },
+    "start": {
+      "col": 1,
+      "row": 0,
+      "dir": "S"
+    },
+    "end": {
+      "col": 4,
+      "row": 3
     }
   },
   {
     "id": 40,
-    "type": "square",
-    "start": {
-      "col": 0,
-      "row": 1,
-      "dir": "SE"
+    "type": "rect",
+    "pieces": {
+      "green": 3,
+      "yellow": 1,
+      "orange": 0
     },
     "end": {
-      "col": 3,
-      "row": 2
+      "col": 4,
+      "row": 1
     },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 1
+    "start": {
+      "col": 0,
+      "row": 0,
+      "dir": "S"
     }
   },
   {
     "id": 41,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 0,
+      "orange": 1
+    },
     "start": {
-      "col": 3,
-      "row": 2,
-      "dir": "SW"
+      "col": 0,
+      "row": 0,
+      "dir": "SE"
     },
     "end": {
-      "col": 0,
+      "col": 4,
       "row": 1
-    },
-    "pieces": {
-      "green": 1,
-      "yellow": 1,
-      "orange": 1
     }
   },
   {
     "id": 42,
-    "type": "square",
-    "start": {
-      "col": 0,
-      "row": 1,
-      "dir": "NE"
-    },
-    "end": {
-      "col": 3,
-      "row": 2
-    },
+    "type": "rect",
     "pieces": {
-      "green": 1,
+      "green": 2,
       "yellow": 1,
       "orange": 1
+    },
+    "end": {
+      "col": 2,
+      "row": 3
+    },
+    "start": {
+      "col": 1,
+      "row": 0,
+      "dir": "SW"
     }
   },
   {
     "id": 43,
-    "type": "square",
-    "start": {
-      "col": 0,
-      "row": 0,
-      "dir": "SE"
-    },
-    "end": {
-      "col": 3,
-      "row": 3
-    },
+    "type": "rect",
     "pieces": {
-      "green": 2,
+      "green": 3,
       "yellow": 1,
       "orange": 0
+    },
+    "start": {
+      "col": 3,
+      "row": 1,
+      "dir": "S"
+    },
+    "end": {
+      "col": 0,
+      "row": 3
     }
   },
   {
     "id": 44,
-    "type": "square",
-    "start": {
-      "col": 3,
-      "row": 0,
-      "dir": "SW"
-    },
-    "end": {
-      "col": 0,
-      "row": 3
-    },
+    "type": "rect",
     "pieces": {
-      "green": 2,
+      "green": 4,
       "yellow": 1,
       "orange": 0
+    },
+    "start": {
+      "col": 1,
+      "row": 0,
+      "dir": "S"
+    },
+    "end": {
+      "col": 5,
+      "row": 2
     }
   },
   {
     "id": 45,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 2,
+      "yellow": 3,
+      "orange": 0
+    },
     "start": {
-      "col": 0,
-      "row": 0,
-      "dir": "SE"
+      "col": 1,
+      "row": 1,
+      "dir": "W"
     },
     "end": {
       "col": 3,
-      "row": 3
-    },
-    "pieces": {
-      "green": 2,
-      "yellow": 1,
-      "orange": 0
+      "row": 1
     }
   },
   {
     "id": 46,
-    "type": "square",
-    "start": {
-      "col": 3,
-      "row": 0,
-      "dir": "SW"
-    },
-    "end": {
-      "col": 0,
-      "row": 3
-    },
+    "type": "rect",
     "pieces": {
-      "green": 2,
+      "green": 4,
       "yellow": 1,
       "orange": 0
+    },
+    "start": {
+      "col": 5,
+      "row": 0,
+      "dir": "W"
+    },
+    "end": {
+      "col": 2,
+      "row": 3
     }
   },
   {
     "id": 47,
-    "type": "square",
+    "type": "rect",
+    "pieces": {
+      "green": 4,
+      "yellow": 2,
+      "orange": 0
+    },
     "start": {
-      "col": 1,
-      "row": 2,
+      "col": 0,
+      "row": 3,
       "dir": "N"
     },
     "end": {
-      "col": 2,
-      "row": 2
-    },
-    "pieces": {
-      "green": 3,
-      "yellow": 1,
-      "orange": 0
+      "col": 5,
+      "row": 3
     }
   },
   {
     "id": 48,
-    "type": "square",
-    "start": {
-      "col": 2,
-      "row": 2,
-      "dir": "N"
-    },
-    "end": {
-      "col": 1,
-      "row": 2
-    },
+    "type": "rect",
     "pieces": {
       "green": 3,
-      "yellow": 1,
+      "yellow": 2,
       "orange": 0
+    },
+    "start": {
+      "col": 1,
+      "row": 0,
+      "dir": "W"
+    },
+    "end": {
+      "col": 2,
+      "row": 3
     }
   },
   {

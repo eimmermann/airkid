@@ -11,8 +11,8 @@
             --primary: #2c3e50;
             --accent: #3498db;
             --piece-red: #e74c3c;
-            --piece-green: #2ecc71;       /* Dark Green (Cross) */
-            --piece-lightgreen: #b8e994;  /* NEW Light Green (Curve) - Was Yellow */
+            --piece-green: #2ecc71;       
+            --piece-lightgreen: #b8e994;  
             --piece-orange: #e67e22;
             --cell-size: 55px; 
         }
@@ -27,12 +27,11 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            overflow-x: hidden; /* Prevent horizontal scroll from explosion */
+            overflow-x: hidden;
         }
 
         h1 { margin: 5px 0 15px 0; font-size: 1.5rem; color: var(--primary); }
         
-        /* Main Layout Container */
         .app-container {
             display: flex;
             flex-direction: column;
@@ -52,18 +51,20 @@
             flex-direction: column;
             align-items: center;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         /* --- LANDSCAPE OPTIMIZATION FOR IPAD --- */
         @media (min-width: 768px) and (orientation: landscape) {
-            h1 { display: none; } /* Hide title to save space on iPad */
+            h1 { display: none; } 
             .app-container {
                 max-width: 90%;
                 height: 90vh;
                 justify-content: center;
             }
             .card {
-                flex-direction: row; /* Side by side */
+                flex-direction: row; 
                 justify-content: space-around;
                 padding: 40px;
                 gap: 40px;
@@ -77,11 +78,9 @@
                 align-items: center;
                 height: 100%;
             }
-            /* Move controls inside the card for landscape */
             .controls-wrapper { order: 2; margin-top: 30px; width: 100%; }
         }
 
-        /* Portrait / Phone Layout helpers */
         @media (orientation: portrait) {
             .card-right { width: 100%; }
             .controls-wrapper { width: 100%; max-width: 500px; margin-bottom: 15px; }
@@ -121,9 +120,9 @@
         #nextBtn {
             background-color: var(--accent);
             color: white;
-            padding: 15px 40px; /* Bigger padding */
-            font-size: 1.4rem;  /* Bigger text */
-            flex-grow: 0.5;     /* Make it wide */
+            padding: 15px 40px;
+            font-size: 1.4rem;
+            flex-grow: 0.5;
             margin-left: 15px;
             background: linear-gradient(to bottom, #3498db, #2980b9);
         }
@@ -172,15 +171,9 @@
         .dir-arrow { font-size: 32px; color: white; font-weight: 900; line-height: 1; display: block; }
         .flag { font-size: 28px; }
 
-        /* Rotations */
-        .rot-N  { transform: rotate(0deg); }
-        .rot-NE { transform: rotate(45deg); }
-        .rot-E  { transform: rotate(90deg); }
-        .rot-SE { transform: rotate(135deg); }
-        .rot-S  { transform: rotate(180deg); }
-        .rot-SW { transform: rotate(225deg); }
-        .rot-W  { transform: rotate(270deg); }
-        .rot-NW { transform: rotate(315deg); }
+        .rot-N  { transform: rotate(0deg); } .rot-NE { transform: rotate(45deg); } .rot-E  { transform: rotate(90deg); }
+        .rot-SE { transform: rotate(135deg); } .rot-S  { transform: rotate(180deg); } .rot-SW { transform: rotate(225deg); }
+        .rot-W  { transform: rotate(270deg); } .rot-NW { transform: rotate(315deg); }
 
         /* --- ACCESSORIES --- */
         .level-title {
@@ -207,27 +200,32 @@
         .acc-icon { width: 35px; height: 35px; margin-bottom: 8px; }
 
         .shape-green { background-color: var(--piece-green); clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); }
-        /* CHANGED: Yellow is now Light Green */
         .shape-yellow { background-color: var(--piece-lightgreen); border-radius: 50%; border-bottom-left-radius: 0; }
         .shape-orange { background-color: var(--piece-orange); border-radius: 50%; }
 
         .acc-count { font-weight: 800; font-size: 1.6rem; color: #2c3e50; }
         .acc-label { font-size: 0.75rem; color: #7f8c8d; margin-top: 4px; font-weight: bold;}
         
-        .edit-link { margin-top: 30px; font-size: 0.8rem; color: #aaa; text-decoration: none; }
+        .edit-link { margin-top: 30px; font-size: 0.8rem; color: #aaa; text-decoration: none; position: relative; z-index: 10; }
 
-        /* --- EMOJI EXPLOSION --- */
+        /* --- EXPLOSION PARTICLES --- */
         .emoji-particle {
             position: fixed;
-            font-size: 2rem;
             pointer-events: none;
             z-index: 9999;
-            animation: float-out 1s ease-out forwards;
+            /* Animation handles float, scale, and rotate */
+            animation: float-out 1.2s ease-out forwards;
         }
 
         @keyframes float-out {
-            0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(1.2); opacity: 0; }
+            0% { 
+                transform: translate(0, 0) scale(0.2) rotate(0deg); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot)); 
+                opacity: 0; 
+            }
         }
 
     </style>
@@ -288,7 +286,6 @@ const app = (function() {
     }
 
     function changeLevel(delta, event) {
-        // Celebration on Next
         if (delta > 0 && event) {
             triggerExplosion(event.clientX, event.clientY);
         }
@@ -296,7 +293,6 @@ const app = (function() {
         const newIndex = currentIndex + delta;
         if (newIndex >= 0 && newIndex < levels.length) {
             currentIndex = newIndex;
-            // Delay render slightly if celebrating
             setTimeout(() => {
                 render();
             }, delta > 0 ? 150 : 0);
@@ -306,8 +302,8 @@ const app = (function() {
     }
 
     function triggerExplosion(x, y) {
-        const emojis = ['🎉', '🚀', '⭐', '🐶', '🍕', '🤖', '🚗', '🌈'];
-        const particleCount = 20;
+        const emojis = ['🎉', '🚀', '⭐', '🐶', '🍕', '🤖', '🚗', '🌈', '🔥', '✨', '🏆', '💯'];
+        const particleCount = 60; // MORE particles
 
         for (let i = 0; i < particleCount; i++) {
             const el = document.createElement('div');
@@ -316,19 +312,27 @@ const app = (function() {
             el.style.left = x + 'px';
             el.style.top = y + 'px';
             
-            // Random direction
+            // Random Size
+            const size = 20 + Math.random() * 40 + 'px'; 
+            el.style.fontSize = size;
+
+            // Random Angle & Velocity
             const angle = Math.random() * Math.PI * 2;
-            const velocity = 100 + Math.random() * 150;
+            const velocity = 100 + Math.random() * 500; // Much further throw
+            
             const tx = Math.cos(angle) * velocity + 'px';
             const ty = Math.sin(angle) * velocity + 'px';
             
+            // Random Rotation
+            const rot = (Math.random() * 720 - 360) + 'deg';
+            
             el.style.setProperty('--tx', tx);
             el.style.setProperty('--ty', ty);
+            el.style.setProperty('--rot', rot);
             
             document.body.appendChild(el);
             
-            // Cleanup
-            setTimeout(() => el.remove(), 1000);
+            setTimeout(() => el.remove(), 1200);
         }
     }
 
@@ -371,7 +375,7 @@ const app = (function() {
         accBox.innerHTML = '';
         const types = [
             { key: 'green', color: 'green', label: 'Cross' },
-            { key: 'yellow', color: 'yellow', label: 'L. Green' }, // Label update
+            { key: 'yellow', color: 'yellow', label: 'L. Green' },
             { key: 'orange', color: 'orange', label: 'Arc' }
         ];
 
