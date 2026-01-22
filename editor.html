@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AirKid Puzzle Editor</title>
+    <script src="puzzles.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; height: 100vh; margin: 0; background: #eee; }
+        
+        /* Sidebar */
+        .sidebar { width: 280px; background: #fff; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
+        .list { flex: 1; overflow-y: auto; }
+        .list-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .list-item:hover { background: #f0f8ff; }
+        .list-item.active { background: #3498db; color: white; }
+        .list-item-status { font-size: 0.8rem; opacity: 0.7; }
+        
+        .toolbar { padding: 15px; border-top: 1px solid #ccc; background: #f9f9f9; }
+        .btn { width: 100%; padding: 12px; margin-bottom: 8px; cursor: pointer; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
+        .btn-primary { background: #2c3e50; color: white; border: none; }
+        .btn-success { background: #27ae60; color: white; border: none; }
+        .btn-helper { font-size: 0.75rem; color: #666; text-align: center; margin-top: 5px; line-height: 1.4; }
+
+        /* Main Area */
+        .main { flex: 1; padding: 30px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
+        
+        /* Metadata Controls */
+        .meta-controls { 
+            display: flex; gap: 20px; background: white; padding: 15px 25px; 
+            border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            align-items: center;
+        }
+        .meta-group { display: flex; flex-direction: column; gap: 5px; }
+        .meta-group label { font-size: 0.8rem; font-weight: bold; color: #7f8c8d; text-transform: uppercase; }
+        .meta-group input, .meta-group select { padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
+
+        /* Tool Palette */
+        .tools-palette { 
+            display: flex; gap: 10px; margin-bottom: 15px; background: white; padding: 10px; border-radius: 50px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .tool-btn { 
+            padding: 10px 20px; border: 2px solid transparent; border-radius: 30px; cursor: pointer; 
+            font-weight: bold; font-size: 0.9rem; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+        }
+        .tool-btn:hover { background: #f0f0f0; }
+        .tool-btn.active { background: #e1f5fe; border-color: #3498db; color: #2980b9; }
+        
+        /* Grid */
+        .grid-wrapper { background: #2c3e50; padding: 15px; border-radius: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .grid { display: grid; gap: 6px; }
+        .cell { 
+            width: 65px; height: 65px; background: #ecf0f1; border-radius: 6px; 
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.1s;
+        }
+        .cell:hover { background: #dfe6e9; }
+        
+        /* Pieces */
+        .piece-start { 
+            width: 85%; height: 85%; background: #e74c3c; border-radius: 8px; 
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 #c0392b;
+        }
+        .piece-end { 
+            width: 85%; height: 85%; background: #e74c3c; border-radius: 8px; 
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 #c0392b;
+        }
+        .arrow { font-size: 28px; color: white; font-weight: 900; line-height: 1; }
+        .flag { font-size: 26px; }
+
+        /* Rotations */
+        .rot-N { transform: rotate(0deg); }
+        .rot-NE { transform: rotate(45deg); }
+        .rot-E { transform: rotate(90deg); }
+        .rot-SE { transform: rotate(135deg); }
+        .rot-S { transform: rotate(180deg); }
+        .rot-SW { transform: rotate(225deg); }
+        .rot-W { transform: rotate(270deg); }
+        .rot-NW { transform: rotate(315deg); }
+
+        /* Rotation Bar */
+        .rotation-bar { 
+            margin-top: 15px; display: flex; gap: 5px; background: white; padding: 10px; border-radius: 12px;
+            opacity: 0.5; pointer-events: none; transition: opacity 0.2s;
+        }
+        .rotation-bar.active { opacity: 1; pointer-events: auto; }
+        .rot-btn { 
+            width: 35px; height: 35px; border: 1px solid #ccc; background: white; border-radius: 4px; 
+            cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+        }
+        .rot-btn:hover { background: #eee; }
+        .rot-btn.selected { background: #3498db; color: white; border-color: #2980b9; }
+
+        /* Inputs */
+        .piece-inputs { display: flex; gap: 20px; margin-top: 25px; }
+        .input-card { 
+            background: white; padding: 10px; border-radius: 10px; text-align: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); width: 80px;
+        }
+        .shape-icon { width: 30px; height: 30px; margin: 0 auto 5px; }
+        .s-green { background: #2ecc71; clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); }
+        .s-yellow { background: #f1c40f; border-radius: 50%; border-bottom-left-radius: 0; }
+        .s-orange { background: #e67e22; border-radius: 50%; }
+        
+        .input-card input { width: 50px; text-align: center; font-size: 1.2rem; border: 1px solid #ddd; border-radius: 4px; padding: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="list" id="levelList"></div>
+        <div class="toolbar">
+            <button class="btn btn-primary" onclick="editor.addLevel()">+ Add New Level</button>
+            <button class="btn btn-success" onclick="editor.saveFile()">💾 Save puzzles.js</button>
+            <div class="btn-helper">
+                <b>Important:</b> Browser security prevents direct editing.<br>
+                Click Save, then replace your existing <b>puzzles.js</b> file.
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        
+        <div class="meta-controls">
+            <div class="meta-group">
+                <label>Level ID</label>
+                <input type="number" id="inpId" style="width: 60px;" onchange="editor.updateMeta()">
+            </div>
+            <div class="meta-group">
+                <label>Board Type</label>
+                <select id="inpType" onchange="editor.updateMeta()">
+                    <option value="square">Square (4x4)</option>
+                    <option value="rect">Rectangle (6x4)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="tools-palette">
+            <button class="tool-btn active" id="toolStart" onclick="editor.setTool('start')">
+                🚗 Place Start
+            </button>
+            <button class="tool-btn" id="toolEnd" onclick="editor.setTool('end')">
+                🏁 Place End
+            </button>
+            <button class="tool-btn" id="toolErase" onclick="editor.setTool('erase')">
+                ❌ Eraser
+            </button>
+        </div>
+
+        <div class="grid-wrapper">
+            <div id="grid" class="grid"></div>
+        </div>
+
+        <div id="rotBar" class="rotation-bar">
+            <button class="rot-btn" onclick="editor.setDir('N')" data-d="N">⬆</button>
+            <button class="rot-btn" onclick="editor.setDir('NE')" data-d="NE">↗</button>
+            <button class="rot-btn" onclick="editor.setDir('E')" data-d="E">➡</button>
+            <button class="rot-btn" onclick="editor.setDir('SE')" data-d="SE">↘</button>
+            <button class="rot-btn" onclick="editor.setDir('S')" data-d="S">⬇</button>
+            <button class="rot-btn" onclick="editor.setDir('SW')" data-d="SW">↙</button>
+            <button class="rot-btn" onclick="editor.setDir('W')" data-d="W">⬅</button>
+            <button class="rot-btn" onclick="editor.setDir('NW')" data-d="NW">↖</button>
+        </div>
+
+        <div class="piece-inputs">
+            <div class="input-card">
+                <div class="shape-icon s-green"></div>
+                <input type="number" id="inpGreen" min="0" onchange="editor.updatePieces()">
+            </div>
+            <div class="input-card">
+                <div class="shape-icon s-yellow"></div>
+                <input type="number" id="inpYellow" min="0" onchange="editor.updatePieces()">
+            </div>
+            <div class="input-card">
+                <div class="shape-icon s-orange"></div>
+                <input type="number" id="inpOrange" min="0" onchange="editor.updatePieces()">
+            </div>
+        </div>
+    </div>
+
+<script>
+const editor = (function() {
+    let levels = window.PUZZLE_DATA || [];
+    levels.sort((a,b) => a.id - b.id);
+    
+    let currentIdx = 0;
+    let currentTool = 'start'; // 'start', 'end', 'erase'
+
+    function init() {
+        renderList();
+        loadLevel(0);
+        setTool('start');
+    }
+
+    function renderList() {
+        const list = document.getElementById('levelList');
+        list.innerHTML = '';
+        levels.forEach((l, idx) => {
+            const div = document.createElement('div');
+            div.className = `list-item ${idx === currentIdx ? 'active' : ''}`;
+            const total = (l.pieces?.green||0) + (l.pieces?.yellow||0) + (l.pieces?.orange||0);
+            div.innerHTML = `<span>Level ${l.id}</span><span class="list-item-status">${total} pcs</span>`;
+            div.onclick = () => loadLevel(idx);
+            list.appendChild(div);
+        });
+    }
+
+    function loadLevel(idx) {
+        currentIdx = idx;
+        const data = levels[idx];
+        renderList();
+
+        document.getElementById('inpId').value = data.id;
+        document.getElementById('inpType').value = data.type || 'square';
+        document.getElementById('inpGreen').value = data.pieces.green;
+        document.getElementById('inpYellow').value = data.pieces.yellow;
+        document.getElementById('inpOrange').value = data.pieces.orange;
+
+        renderGrid();
+    }
+
+    function setTool(tool) {
+        currentTool = tool;
+        ['start','end','erase'].forEach(t => {
+            const btn = document.getElementById('tool' + t.charAt(0).toUpperCase() + t.slice(1));
+            if(t === tool) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+    }
+
+    function renderGrid() {
+        const data = levels[currentIdx];
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '';
+        
+        const cols = data.type === 'square' ? 4 : 6;
+        grid.style.gridTemplateColumns = `repeat(${cols}, 65px)`; 
+
+        const rotBar = document.getElementById('rotBar');
+        if (data.start) {
+            rotBar.classList.add('active');
+            document.querySelectorAll('.rot-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.d === data.start.dir);
+            });
+        } else {
+            rotBar.classList.remove('active');
+        }
+
+        for(let r=0; r<4; r++) {
+            for(let c=0; c<cols; c++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.onclick = () => handleCellClick(c, r);
+
+                const isStart = data.start && data.start.col === c && data.start.row === r;
+                const isEnd = data.end && data.end.col === c && data.end.row === r;
+
+                if(isStart) {
+                    cell.innerHTML = `<div class="piece-start"><span class="arrow rot-${data.start.dir}">⬆</span></div>`;
+                } else if(isEnd) {
+                    cell.innerHTML = `<div class="piece-end"><span class="flag">🏁</span></div>`;
+                }
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+    function handleCellClick(c, r) {
+        const data = levels[currentIdx];
+        
+        if (currentTool === 'erase') {
+            if(data.start && data.start.col === c && data.start.row === r) delete data.start;
+            if(data.end && data.end.col === c && data.end.row === r) delete data.end;
+        } 
+        else if (currentTool === 'start') {
+            if(data.end && data.end.col === c && data.end.row === r) delete data.end;
+            if(data.start && (data.start.col !== c || data.start.row !== r)) delete data.start; // Move start
+            const oldDir = data.start ? data.start.dir : 'N';
+            data.start = { col: c, row: r, dir: oldDir };
+        } 
+        else if (currentTool === 'end') {
+            if(data.start && data.start.col === c && data.start.row === r) delete data.start;
+            if(data.end && (data.end.col !== c || data.end.row !== r)) delete data.end; // Move end
+            data.end = { col: c, row: r };
+        }
+        renderGrid();
+    }
+
+    function setDir(dir) {
+        const data = levels[currentIdx];
+        if(data.start) {
+            data.start.dir = dir;
+            renderGrid();
+        }
+    }
+
+    function updateMeta() {
+        const data = levels[currentIdx];
+        data.id = parseInt(document.getElementById('inpId').value);
+        data.type = document.getElementById('inpType').value;
+        renderGrid();
+        renderList();
+    }
+
+    function updatePieces() {
+        const data = levels[currentIdx];
+        data.pieces.green = parseInt(document.getElementById('inpGreen').value) || 0;
+        data.pieces.yellow = parseInt(document.getElementById('inpYellow').value) || 0;
+        data.pieces.orange = parseInt(document.getElementById('inpOrange').value) || 0;
+        renderList(); 
+    }
+
+    function addLevel() {
+        const newId = levels.length > 0 ? Math.max(...levels.map(l=>l.id)) + 1 : 1;
+        levels.push({ id: newId, type: 'square', pieces: { green:0, yellow:0, orange:0 } });
+        levels.sort((a,b) => a.id - b.id);
+        const newIdx = levels.findIndex(l => l.id === newId);
+        loadLevel(newIdx);
+        setTimeout(() => {
+            document.getElementById('levelList').children[newIdx].scrollIntoView({behavior:'smooth'});
+        }, 100);
+    }
+
+    function saveFile() {
+        const jsonStr = JSON.stringify(levels, null, 2);
+        const fileContent = `window.PUZZLE_DATA = ${jsonStr};`;
+        const blob = new Blob([fileContent], { type: 'text/javascript' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'puzzles.js';
+        a.click();
+        
+        URL.revokeObjectURL(url);
+    }
+
+    init();
+
+    return {
+        loadLevel, addLevel, updateMeta, updatePieces, setDir, saveFile, setTool, handleCellClick
+    };
+})();
+</script>
+</body>
+</html>
